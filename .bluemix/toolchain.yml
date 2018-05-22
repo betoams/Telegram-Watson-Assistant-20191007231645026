@@ -9,9 +9,10 @@ sample-build:
   parameters:
     name: "{{name}}"
     configuration:
+      content: $file(pipeline.yml)
       env:
         REPO: "sample-repo"
-        SPACE_NAME: ""
+        TELEGRAM_KEY: ""
         CF_APP_NAME: ""
         ORG_NAME: ""
         REGION_ID: ""
