@@ -103,7 +103,6 @@ stages:
         cf delete $OLD_CF_APP -f
       fi
       #Print the dev test variabel
-      echo ${DEV_VAR}
       # Export app name and URL for use in later Pipeline jobs
       export CF_APP_NAME="$CF_APP"
       export APP_URL=http://$(cf app $CF_APP_NAME | grep -e urls: -e routes: | awk '{print $2}')
