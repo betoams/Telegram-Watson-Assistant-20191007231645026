@@ -1,0 +1,7 @@
+---
+parameters:
+  CLOUDANT_USERNAME: ""
+  CLOUDANT_PASSWORD: ""
+  CLOUDANT_HOST: ""
+  CLOUDANT_URL: ""
+  DATABASE_NAME: "contexts"

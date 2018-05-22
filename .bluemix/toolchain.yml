@@ -1,0 +1,12 @@
+Telegram:
+  service_id: Telegram
+  $ref: telegram.yml
+Text To Speech:
+  service_id: tts
+  $ref: tts.yml
+Speech To Text:
+  service_id: stt
+  $ref: stt.yml
+Cloudant:
+  service_id: cloudant
+  $ref: cloudant.yml
