@@ -9,7 +9,7 @@ stages:
   - type: commit
   jobs:
   - name: Build
-    type: buider
+    type: builder
     script: |
     #!/bin/bash
     # The default Node.js version is 0.10.40
