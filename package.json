@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec npm run start-dev-server -- ./src",
     "start-dev-server": "babel-node ./src",
-    "start": "npm run build && node server",
+    "start": "node server",
     "build": "babel src --out-dir server",
     "push": "npm run build && cf push"
   },
