@@ -21,7 +21,8 @@ stages:
      #export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
      # To use Node.js 6.7.0, uncomment the following line:
      export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
-     npm install && npm run build 
+     npm install
+     npm run build 
      : |
 - name: DEPLOY
   inputs:
