@@ -24,7 +24,7 @@ stages:
     npm install : |
 - name: DEPLOY
   inputs:
-  - type: job
+  - type: deployer
     stage: BUILD
     job: Build
   triggers:
