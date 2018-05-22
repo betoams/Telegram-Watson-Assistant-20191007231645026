@@ -230,8 +230,7 @@
             "type": "text",
             "readonly": false,
             "title": "Database Name",
-            "key": "DATABASE_NAME",
-            "value": "contexts"
+            "key": "DATABASE_NAME"
         },
         {
             "type": "text",
