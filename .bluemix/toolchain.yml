@@ -69,9 +69,8 @@ services:
 form:
   pipeline:
     parameters:
-      prod-app-name: '{{services.sample-repo.parameters.repo_name}}',
+      prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
       WATSON_ASSISTANT_VERSION: '2018-02-16'
       DATABASE_NAME: 'contexts'
     schema:
       $ref: deploy.json
-
