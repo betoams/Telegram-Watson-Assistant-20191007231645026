@@ -1,0 +1,6 @@
+---
+applications:
+ - name: "[Light] Node Orchestrator"
+   host: light-orchestrator
+   memory: 128M
+   buildpack: nodejs_buildpack
