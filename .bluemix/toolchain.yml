@@ -1,37 +1,36 @@
-toolchain:
-  name: 'simple-toolchain-{{timestamp}}'
-  template:
-    getting_started:
-      $ref: "#/messages/template.gettingStarted"
-services:
-  sample-repo:
-    service_id: githubpublic
-    parameters:
-      repo_name: '{{toolchain.name}}'
-      repo_url: 'https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS'
-      type: clone
-  sample-build:
-    service_id: pipeline
-    parameters:
-      services:
-        - sample-repo
-      name: '{{services.sample-repo.parameters.repo_name}}'
-      ui-pipeline: true
-      configuration:
-        content:
-          $text: pipeline.yml
-        env:
-          SAMPLE_REPO: sample-repo
-          CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
-          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
-          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
-          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
-        execute: true
-  webide:
-    service_id: orion
-form:
-  pipeline:
-    parameters:
-      prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
-    schema:
-$ref: deploy.json
+---
+name: "Deploy a simple spring boot application"
+description: "Toolchain to deploy a simple spring boot application to Bluemix"
+version: 0.1
+
+# Pipelines
+sample-build:
+  service_id: pipeline
+  parameters:
+    name: "{{name}}"
+    configuration:
+      content: $file(pipeline.yml)
+      env:
+        REPO: "sample-repo"
+        SPACE_NAME: "{{deploy.parameters.selected-space}}"
+        CF_APP_NAME: "{{deploy.parameters.app-name}}"
+        ORG_NAME: "{{deploy.parameters.selected-organization}}"
+        REGION_ID: "{{deploy.parameters.selected-region}}"
+      execute: true
+    services: ["sample-repo"]
+  hidden: [form, description]
+
+# Web IDE
+webide:
+  service_id: orion
+
+# Deployment
+deploy:
+  schema:
+    $ref: deploy.json
+  service-category: pipeline
+  parameters:
+    app-name: "{{name}}"
+    selected-region: "{{region}}"
+    selected-organization: "{{organization}}"
+selected-space: "{{space}}"
