@@ -4,10 +4,10 @@ declared-services:
     label: cloudantNoSQLDB
     plan: Lite
   Telegram-stt:
-    label: SpeechToText
+    label: speech_to_text
     plan: Lite
   Context-tts:
-    label: TexttoSpeech
+    label: text_to_speech
     plan: Lite
 applications:
  - name: "[Telegram] Node Orchestrator"
