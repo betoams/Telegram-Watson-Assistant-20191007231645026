@@ -22,7 +22,7 @@ stages:
      # To use Node.js 6.7.0, uncomment the following line:
      #export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
      npm install && npm run build 
-     echo npm install: |
+     : |
 - name: DEPLOY
   inputs:
   - type: job
