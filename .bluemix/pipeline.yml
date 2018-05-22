@@ -1,59 +1,100 @@
 ---
 stages:
-- name: Build Stage
+- name: BUILD
   inputs:
   - type: git
     branch: master
-    service: ${REPO}
+    service: ${SAMPLE_REPO}
   triggers:
   - type: commit
   jobs:
   - name: Build
     type: builder
-    artifact_dir: ''
-    build_type: maven
-    script: |-
-      #!/bin/bash
-      # mvn -B package
-- name: Test Stage
+- name: DEPLOY
   inputs:
   - type: job
-    stage: Build Stage
+    stage: BUILD
     job: Build
-    dir_name: null
   triggers:
   - type: stage
+  properties:
+  - name: WATSON_ASSISTANT_USERNAME
+    value: ${WATSON_ASSISTANT_USERNAME}
+    type: text
+  - name: WATSON_ASSISTANT_PASSWORD
+    value: ${WATSON_ASSISTANT_PASSWORD}
+    type: text
+  - name: WATSON_ASSISTANT_VERSION
+    value: ${WATSON_ASSISTANT_VERSION}
+    type: text
+  - name: WATSON_ASSISTANT_WORKSPACE
+    value: ${WATSON_ASSISTANT_WORKSPACE}
+    type: text
+  - name: CLOUDANT_USERNAME
+    value: ${CLOUDANT_USERNAME}
+    type: text
+  - name: CLOUDANT_PASSWORD
+    value: ${CLOUDANT_PASSWORD}
+    type: text
+  - name: CLOUDANT_HOST
+    value: ${CLOUDANT_HOST}
+    type: text
+  - name: CLOUDANT_URL
+    value: ${CLOUDANT_URL}
+    type: text
+  - name: DATABASE_NAME
+    value: ${DATABASE_NAME}
+    type: text
+  - name: TELEGRAM_KEY
+    value: ${TELEGRAM_KEY}
+    type: text
+  - name: STT_PASSWORD
+    value: ${STT_PASSWORD}
+    type: text
+  - name: TTS_PASSWORD
+    value: ${TTS_PASSWORD}
+    type: text
+  - name: STT_USERNAME
+    value: ${STT_USERNAME}
+    type: text
+  - name: STT_PASSWORD
+    value: ${STT_PASSWORD}
+    type: text
   jobs:
-  - name: Test
-    type: tester
-    script: |-
-      #!/bin/bash
-      # invoke tests here
-      # mvn test
-- name: Deploy Stage
-  inputs:
-  - type: job
-    stage: Build Stage
-    job: Build
-    dir_name: null
-  triggers:
-  - type: stage
-  jobs:
-  - name: Deploy
+  - name: Blue-Green Deploy
     type: deployer
     target:
-      region_id: ${REGION_ID}
-      organization: ${ORG_NAME}
-      space: ${SPACE_NAME}
+      region_id: ${PROD_REGION_ID}
+      organization: ${PROD_ORG_NAME}
+      space: ${PROD_SPACE_NAME}
       application: ${CF_APP_NAME}
-    script: |-
+    script: |
       #!/bin/bash
-      # cd target
-      # cf push "${CF_APP}-blue" -n "${CF_APP}" -p "springboot-demo.war" -m 256M -f ../manifest-pipeline.yml
-      # cf delete "${CF_APP}-green" -f
-      # cf rename "${CF_APP}-blue" "${CF_APP}-green"
-      #Optionally, redeploy blue to be able to show they're both up and the green/blue process worked.
-      # cf push "${CF_APP}-blue" -n "${CF_APP}" -p "springboot-demo.war" -m 256M -f ../manifest-pipeline.yml
-      # cf apps | grep "${CF_APP}"
+      # Push app
+      if ! cf app $CF_APP; then  
+        cf push $CF_APP
+      else
+        OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
+        rollback() {
+          set +e  
+          if cf app $OLD_CF_APP; then
+            cf logs $CF_APP --recent
+            cf delete $CF_APP -f
+            cf rename $OLD_CF_APP $CF_APP
+          fi
+          exit 1
+        }
+        set -e
+        trap rollback ERR
+        cf rename $CF_APP $OLD_CF_APP
+        cf push $CF_APP
+        cf delete $OLD_CF_APP -f
+      fi
+      #Print the dev test variabel
+      echo ${DEV_VAR}
+      # Export app name and URL for use in later Pipeline jobs
+      export CF_APP_NAME="$CF_APP"
+      export APP_URL=http://$(cf app $CF_APP_NAME | grep -e urls: -e routes: | awk '{print $2}')
       # View logs
-      # cf logs "${CF_APP}" --recent
+      #cf logs "${CF_APP}" --recent
+      

@@ -1,64 +1,273 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Sample Deploy Stage",
-    "description": "sample toolchain",
-    "longDescription": "The Delivery Pipeline automates continuous deployment.",
+    "messages": {
+        "$i18n": "locales.yml"
+    },
+    "title": {
+        "$ref": "#/messages/deploy.title"
+    },
+    "description": {
+        "$ref": "#/messages/deploy.description"
+    },
+    "longDescription": {
+        "$ref": "#/messages/deploy.longDescription"
+    },
     "type": "object",
     "properties": {
-        "selected-region": {
-            "description": "The Bluemix region",
+        "prod-region": {
+            "description": "The bluemix region",
             "type": "string"
         },
-        "selected-organization": {
-            "description": "The Bluemix org",
+        "prod-organization": {
+            "description": "The bluemix org",
             "type": "string"
         },
-        "selected-space": {
-            "description": "The Bluemix space",
+        "prod-space": {
+            "description": "The bluemix space",
+            "type": "string"
+        },
+        "prod-app-name": {
+            "description": {
+                "$ref": "#/messages/deploy.appDescription"
+            },
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "WATSON_ASSISTANT_USERNAME" :{
+            "description": "Watson Assistant Username",
+            "type": "string"
+        },
+        "WATSON_ASSISTANT_PASSWORD": {
+            "description": "Watson Assistant Password",
+            "type": "string"
+        } ,
+        "WATSON_ASSISTANT_VERSION" : {
+            "description": "Watson Assistant Version",
+            "type": "string"
+        },
+        "WATSON_ASSISTANT_WORKSPACE": {
+            "description": "Watson Assistant Workspace",
+            "type": "string"
+        }, 
+        "CLOUDANT_USERNAME": {
+            "description": "Cloudant Username",
+            "type": "string"
+        }
+        ,
+        "CLOUDANT_PASSWORD" : {
+            "description": "Cloudant Password",
+            "type": "string"
+        },
+        "CLOUDANT_HOST" : {
+            "description": "Cloudant Host",
+            "type": "string"
+        },
+        "CLOUDANT_URL": {
+            "description": "Cloudant URL",
+            "type": "string"
+        },
+        "DATABASE_NAME": {
+            "description": "Cloudant Document Name",
+            "type": "string"
+        },
+        "TELEGRAM_KEY" : {
+            "description": "Telegram Key",
+            "type": "string"
+        },
+        "TTS_USERNAME": {
+            "description": "TTS Username",
+            "type": "string"
+        },
+        "TTS_PASSWORD": {
+            "description": "TTS Password",
+            "type": "string"
+        },
+        "STT_USERNAME" : {
+            "description": "SST Username",
+            "type": "string"
+        },
+        "STT_PASSWORD": {
+            "description": "SST Password",
             "type": "string"
         }
     },
-    "required": ["selected-region", "selected-organization", "selected-space"],
+    "required": [
+        "prod-region",
+        "prod-organization",
+        "prod-space",
+        "prod-app-name",
+        "dev-var",
+        "WATSON_ASSISTANT_USERNAME",
+        "WATSON_ASSISTANT_PASSWORD" ,
+        "WATSON_ASSISTANT_VERSION",
+        "WATSON_ASSISTANT_WORKSPACE", 
+        "CLOUDANT_USERNAME",
+        "CLOUDANT_PASSWORD",
+        "CLOUDANT_HOST",
+        "CLOUDANT_URL",
+        "DATABASE_NAME",
+        "TELEGRAM_KEY",
+        "TTS_USERNAME",
+        "TTS_PASSWORD",
+        "STT_USERNAME",
+        "STT_PASSWORD"
+    ],
     "form": [
         {
             "type": "validator",
             "url": "/devops/setup/bm-helper/helper.html"
         },
         {
+            "type": "text",
+            "readonly": false,
+            "title": {
+                "$ref": "#/messages/deploy.appName"
+            },
+            "key": "prod-app-name"
+        },
+        {
             "type": "table",
-            "columnCount": 3,
-            "widths": ["33%", "33%", "33%"],
+            "columnCount": 4,
+            "widths": [
+                "15%",
+                "28%",
+                "28%",
+                "28%"
+            ],
             "items": [
                 {
                     "type": "label",
-                    "title": "Region"
+                    "title": ""
                 },
                 {
                     "type": "label",
-                    "title": "Organization"
+                    "title": {
+                        "$ref": "#/messages/region"
+                    }
                 },
                 {
                     "type": "label",
-                    "title": "Space"
+                    "title": {
+                        "$ref": "#/messages/organization"
+                    }
+                },
+                {
+                    "type": "label",
+                    "title": {
+                        "$ref": "#/messages/space"
+                    }
+                },
+                {
+                    "type": "label",
+                    "title": {
+                        "$ref": "#/messages/prodStage"
+                    }
                 },
                 {
                     "type": "select",
-                    "key": "selected-region"
+                    "key": "prod-region"
                 },
                 {
                     "type": "select",
-                    "key": "selected-organization"
+                    "key": "prod-organization"
                 },
                 {
                     "type": "select",
-                    "key": "selected-space",
+                    "key": "prod-space",
                     "readonly": false
                 }
             ]
         },
         {
-            "type": "label",
-            "title": "Please fill in the fields above."
-        }
+            "type": "text",
+            "readonly": false,
+            "title": "Watson Assistant Username",
+            "key": "WATSON_ASSISTANT_USERNAME"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Watson Assistant Password",
+            "key": "WATSON_ASSISTANT_PASSWORD"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Watson Assistant Version",
+            "key": "WATSON_ASSISTANT_VERSION"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Watson Assistant Workspace",
+            "key": "WATSON_ASSISTANT_WORKSPACE"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Cloudant Username",
+            "key": "CLOUDANT_USERNAME"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Cloudant Password",
+            "key": "CLOUDANT_PASSWORD"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Cloudant Host",
+            "key": "CLOUDANT_HOST"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Cloudant Url",
+            "key": "CLOUDANT_URL"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Database Name",
+            "key": "DATABASE_NAME",
+            "value": "contexts"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Telegram Key",
+            "key": "TELEGRAM_KEY"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "TTS Username",
+            "key": "TTS_USERNAME"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "TTS Username",
+            "key": "TTS_USERNAME"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "TTS Password",
+            "key": "TTS_PASSWORD"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "STT Username",
+            "key": "STT_USERNAME"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "STT Password",
+            "key": "STT_PASSWORD"
+        }       
     ]
 }

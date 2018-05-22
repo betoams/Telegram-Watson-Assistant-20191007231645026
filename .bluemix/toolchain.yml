@@ -1,42 +1,75 @@
----
-name: "Telegram"
-description: "Toolchain to deploy a simple spring boot application to Bluemix"
-version: 0.1
-schema: 
+version: '2'
+messages:
+  $i18n: locales.yml
+template:
+  name:
+    $ref: "#/messages/template.name"
+  description:
+    $ref: "#/messages/template.description"
+  header: '![](toolchain.svg?localize)'
+  icon: icon.svg
+  required:
+    - sample-build
+    - sample-repo
+  info:
+    git url: >-
+      [https://github.com/RabahZeineddine/toolchain-deploy](https://github.com/RabahZeineddine/toolchain-deploy)
+    git branch: >-
+      [master](https://github.com/RabahZeineddine/toolchain-deploy/tree/master)
+toolchain:
+  name: 'Telegram-Watson-Assistant-{{timestamp}}'
+  template:
+    getting_started:
+      $ref: "#/messages/template.gettingStarted"
+# Github repo
+services:
+  sample-repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: '{{toolchain.name}}'
+      repo_url: 'https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS'
+      type: clone
+      has_issues: true
+      enable_traceability: true
+  # Pipelines
+  sample-build:
+    service_id: pipeline
+    parameters:
+      services:
+        - sample-repo
+      name: '{{services.sample-repo.parameters.repo_name}}'
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          SAMPLE_REPO: sample-repo
+          CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
+          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
+          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
+          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+          WATSON_ASSISTANT_USERNAME: '{{form.pipeline.parameters.WATSON_ASSISTANT_USERNAME}}'
+          WATSON_ASSISTANT_PASSWORD: '{{form.pipeline.parameters.WATSON_ASSISTANT_PASSWORD}}'
+          WATSON_ASSISTANT_VERSION: '{{form.pipeline.parameters.WATSON_ASSISTANT_VERSION}}'
+          WATSON_ASSISTANT_WORKSPACE: '{{form.pipeline.parameters.WATSON_ASSISTANT_WORKSPACE}}'
+          CLOUDANT_USERNAME: '{{form.pipeline.parameters.CLOUDANT_USERNAME}}'
+          CLOUDANT_PASSWORD: '{{form.pipeline.parameters.CLOUDANT_PASSWORD}}'
+          CLOUDANT_HOST: '{{form.pipeline.parameters.CLOUDANT_HOST}}'
+          CLOUDANT_URL: '{{form.pipeline.parameters.CLOUDANT_URL}}'
+          TELEGRAM_KEY: '{{form.pipeline.parameters.TELEGRAM_KEY}}'
+          TTS_USERNAME: '{{form.pipeline.parameters.TTS_USERNAME}}'
+          TTS_PASSWORD: '{{form.pipeline.parameters.TTS_PASSWORD}}'
+          STT_USERNAME: '{{form.pipeline.parameters.STT_USERNAME}}'
+          STT_PASSWORD: '{{form.pipeline.parameters.STT_PASSWORD}}'
+          DATABASE_NAME: '{{form.pipeline.parameters.DATABASE_NAME}}'
+          
+        execute: true
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
+    schema:
+      $ref: deploy.json
 
-# Github repos
-sample-repo:
-  service_id: githubpublic
-  parameters:
-    repo_name: "{{name}}"
-    repo_url: "https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS"
-    type: clone
-    has_issues: true
-
-# Pipelines
-sample-build:
-  service_id: pipeline
-  parameters:
-    name: "{{name}}"
-    configuration:
-      content: $file(pipeline.yml)
-      env:
-        REPO: "sample-repo"
-        SPACE_NAME: "{{deploy.parameters.selected-space}}"
-        CF_APP_NAME: "{{deploy.parameters.app-name}}"
-        ORG_NAME: "{{deploy.parameters.selected-organization}}"
-        REGION_ID: "{{deploy.parameters.selected-region}}"
-      execute: true
-    services: ["sample-repo"]
-  hidden: [form, description]
-
-# Deployment
-deploy:
-  schema:
-    $ref: deploy.json
-  service-category: pipeline
-  parameters:
-    app-name: "{{name}}"
-    selected-region: "{{region}}"
-    selected-organization: "{{organization}}"
-    selected-space: "{{space}}"
