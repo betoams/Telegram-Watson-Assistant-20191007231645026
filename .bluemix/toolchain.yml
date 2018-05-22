@@ -31,12 +31,12 @@ sample-build:
   hidden: [form, description]
 
 Deployment
-deploy:
-  schema:
-    $ref: deploy.json
-  service-category: pipeline
-  parameters:
-    app-name: "{{name}}"
-    selected-region: "{{region}}"
-    selected-organization: "{{organization}}"
-    selected-space: "{{space}}"
+form:
+  pipeline:
+    schema:
+      $ref: deploy.json
+    parameters:
+      app-name: "{{name}}"
+      selected-region: "{{region}}"
+      selected-organization: "{{organization}}"
+      selected-space: "{{space}}"
