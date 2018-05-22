@@ -9,7 +9,7 @@ stages:
   - type: commit
   jobs:
   - name: Build
-    type: builder
+    type: npm
 - name: DEPLOY
   inputs:
   - type: job

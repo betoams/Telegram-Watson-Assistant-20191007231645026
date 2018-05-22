@@ -96,7 +96,6 @@
         "prod-organization",
         "prod-space",
         "prod-app-name",
-        "dev-var",
         "WATSON_ASSISTANT_USERNAME",
         "WATSON_ASSISTANT_PASSWORD" ,
         "WATSON_ASSISTANT_VERSION",
