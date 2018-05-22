@@ -12,7 +12,7 @@ stages:
     type: builder
 - name: DEPLOY
   inputs:
-  - type: deployer
+  - type: job
     stage: BUILD
     job: Build
   triggers:
