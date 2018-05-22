@@ -1,10 +1,16 @@
 ---
 declared-services:
-  cloudant-nodejs:
+  Telegram-cloudant:
     label: cloudantNoSQLDB
-    plan: Shared
+    plan: Lite
+  Telegram-stt:
+    label: SpeechToText
+    plan: Lite
+  Context-tts:
+    label: TexttoSpeech
+    plan: Lite
 applications:
- - name: "[Company name] Node Orchestrator"
-   host: company-orchestrator
+ - name: "[Telegram] Node Orchestrator"
+   host: telegram-orchestrator
    memory: 128M
    buildpack: nodejs_buildpack
