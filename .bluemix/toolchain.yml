@@ -1,12 +1,39 @@
-Telegram:
-  service_id: Telegram
-  $ref: telegram.yml
-Text To Speech:
-  service_id: tts
-  $ref: tts.yml
-Speech To Text:
-  service_id: stt
-  $ref: stt.yml
-Cloudant:
-  service_id: cloudant
-  $ref: cloudant.yml
+toolchain:
+  name: 'simple-toolchain-{{timestamp}}'
+  template:
+    getting_started:
+      $ref: "#/messages/template.gettingStarted"
+services:
+  sample-repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: '{{toolchain.name}}'
+      repo_url: 'https://github.com/open-toolchain/node-hello-world'
+      type: clone
+      has_issues: true
+      enable_traceability: true
+  sample-build:
+    service_id: pipeline
+    parameters:
+      services:
+        - sample-repo
+      name: '{{services.sample-repo.parameters.repo_name}}'
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          SAMPLE_REPO: sample-repo
+          CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
+          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
+          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
+          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+        execute: true
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
+    schema:
+$ref: deploy.json
