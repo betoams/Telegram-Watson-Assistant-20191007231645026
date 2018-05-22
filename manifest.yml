@@ -1,6 +1,0 @@
----
-applications:
- - name: "[Telegram] Node Orchestrator"
-   host: telegram-orchestrator
-   memory: 128M
-   buildpack: nodejs_buildpack
