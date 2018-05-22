@@ -9,7 +9,6 @@ sample-build:
   parameters:
     name: "{{name}}"
     configuration:
-      content: $file(pipeline.yml)
       env:
         REPO: "sample-repo"
         SPACE_NAME: ""
