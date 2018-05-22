@@ -18,6 +18,12 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: CF_APP_NAME
+    value: undefined
+    type: text
+  - name: APP_URL
+    value: undefined
+    type: text
   - name: WATSON_ASSISTANT_USERNAME
     value: ${WATSON_ASSISTANT_USERNAME}
     type: text
@@ -96,4 +102,3 @@ stages:
       export APP_URL=http://$(cf app $CF_APP_NAME | grep -e urls: -e routes: | awk '{print $2}')
       # View logs
       #cf logs "${CF_APP}" --recent
-      
