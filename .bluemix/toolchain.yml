@@ -13,9 +13,9 @@ template:
     - sample-repo
   info:
     git url: >-
-      [https://github.com/RabahZeineddine/toolchain-deploy](https://github.com/RabahZeineddine/toolchain-deploy)
+      [https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS](https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS)
     git branch: >-
-      [master](https://github.com/RabahZeineddine/toolchain-deploy/tree/master)
+      [master](https://github.com/BrunoTCouto/Watson-assistant-Telegram-with-STT-TTS/tree/master)
 toolchain:
   name: 'Telegram-Watson-Assistant-{{timestamp}}'
   template:
