@@ -79,22 +79,6 @@ stages:
   - name: STT_PASSWORD
     value: ${STT_PASSWORD}
     type: text
-  configuration:
-    env:
-    WATSON_ASSISTANT_USERNAME: '{{WATSON_ASSISTANT_USERNAME}}'
-    WATSON_ASSISTANT_PASSWORD : '{{WATSON_ASSISTANT_PASSWORD }}'
-    WATSON_ASSISTANT_VERSION : '{{WATSON_ASSISTANT_VERSION }}'
-    WATSON_ASSISTANT_WORKSPACE : '{{WATSON_ASSISTANT_WORKSPACE }}'
-    CLOUDANT_USERNAME : '{{CLOUDANT_USERNAME }}'
-    CLOUDANT_PASSWORD : '{{CLOUDANT_PASSWORD }}'
-    CLOUDANT_HOST : '{{CLOUDANT_HOST }}'
-    CLOUDANT_URL : '{{CLOUDANT_URL }}'
-    DATABASE_NAME : '{{DATABASE_NAME }}'
-    TELEGRAM_KEY: '{{TELEGRAM_KEY}}'
-    TTS_USERNAME: '{{TTS_USERNAME}}'
-    TTS_PASSWORD: '{{TTS_PASSWORD}}'
-    STT_USERNAME: '{{STT_USERNAME}}'
-    STT_PASSWORD: '{{STT_PASSWORD}}'
   jobs:
   - name: Blue-Green Deploy
     type: deployer
@@ -107,7 +91,22 @@ stages:
       #!/bin/bash
       # Push app
       if ! cf app $CF_APP; then  
-        cf push $CF_APP
+        cf push $CF_APP --no-start
+        cf set-env $CF_APP WATSON_ASSISTANT_USERNAME ${WATSON_ASSISTANT_USERNAME}
+        cf set-env $CF_APP WATSON_ASSISTANT_PASSWORD ${WATSON_ASSISTANT_PASSWORD}
+        cf set-env $CF_APP WATSON_ASSISTANT_VERSION ${WATSON_ASSISTANT_VERSION}
+        cf set-env $CF_APP WATSON_ASSISTANT_WORKSPACE ${WATSON_ASSISTANT_WORKSPACE}
+        cf set-env $CF_APP CLOUDANT_USERNAME ${CLOUDANT_USERNAME}
+        cf set-env $CF_APP CLOUDANT_PASSWORD ${CLOUDANT_PASSWORD}
+        cf set-env $CF_APP CLOUDANT_HOST ${CLOUDANT_HOST}
+        cf set-env $CF_APP CLOUDANT_URL ${CLOUDANT_URL}
+        cf set-env $CF_APP DATABASE_NAME ${DATABASE_NAME}
+        cf set-env $CF_APP TELEGRAM_KEY ${TELEGRAM_KEY}
+        cf set-env $CF_APP TTS_USERNAME ${TTS_USERNAME}
+        cf set-env $CF_APP TTS_PASSWORD ${TTS_PASSWORD}
+        cf set-env $CF_APP STT_USERNAME ${STT_USERNAME}
+        cf set-env $CF_APP STT_PASSWORD ${STT_PASSWORD}
+        cf start $CF_APP
       else
         OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
         rollback() {
@@ -122,7 +121,22 @@ stages:
         set -e
         trap rollback ERR
         cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP
+        cf push $CF_APP --no-start
+        cf set-env $CF_APP WATSON_ASSISTANT_USERNAME ${WATSON_ASSISTANT_USERNAME}
+        cf set-env $CF_APP WATSON_ASSISTANT_PASSWORD ${WATSON_ASSISTANT_PASSWORD}
+        cf set-env $CF_APP WATSON_ASSISTANT_VERSION ${WATSON_ASSISTANT_VERSION}
+        cf set-env $CF_APP WATSON_ASSISTANT_WORKSPACE ${WATSON_ASSISTANT_WORKSPACE}
+        cf set-env $CF_APP CLOUDANT_USERNAME ${CLOUDANT_USERNAME}
+        cf set-env $CF_APP CLOUDANT_PASSWORD ${CLOUDANT_PASSWORD}
+        cf set-env $CF_APP CLOUDANT_HOST ${CLOUDANT_HOST}
+        cf set-env $CF_APP CLOUDANT_URL ${CLOUDANT_URL}
+        cf set-env $CF_APP DATABASE_NAME ${DATABASE_NAME}
+        cf set-env $CF_APP TELEGRAM_KEY ${TELEGRAM_KEY}
+        cf set-env $CF_APP TTS_USERNAME ${TTS_USERNAME}
+        cf set-env $CF_APP TTS_PASSWORD ${TTS_PASSWORD}
+        cf set-env $CF_APP STT_USERNAME ${STT_USERNAME}
+        cf set-env $CF_APP STT_PASSWORD ${STT_PASSWORD}
+        cf start $CF_APP
         cf delete $OLD_CF_APP -f
       fi
       #Print the dev test variabel
