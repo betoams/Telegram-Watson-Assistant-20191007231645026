@@ -67,8 +67,8 @@ stages:
   - name: TELEGRAM_KEY
     value: ${TELEGRAM_KEY}
     type: text
-  - name: STT_PASSWORD
-    value: ${STT_PASSWORD}
+  - name: TTS_USERNAME
+    value: ${TTS_USERNAME}
     type: text
   - name: TTS_PASSWORD
     value: ${TTS_PASSWORD}
