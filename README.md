@@ -60,7 +60,7 @@ This project was created from a request from a salesperson in the company where 
 Start a conversation with your bot in telegram, you can chat with him by text and voice
 
 ## Credits
-Special tanks for [Rabah Zeineddine](https://www.linkedin.com/in/rabahzeineddine/) & [Gabriel Marote](https://www.linkedin.com/in/gamarote/) for helping with the pipeline creation
+Special thanks for [Rabah Zeineddine](https://www.linkedin.com/in/rabahzeineddine/) & [Gabriel Marote](https://www.linkedin.com/in/gamarote/) for helping with the pipeline creation
 
 
 ## License
