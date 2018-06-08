@@ -52,7 +52,7 @@ This project was created from a request from a salesperson in the company where 
 
     4.1 You can see the Deployment status by following these steps
     <img src="https://user-images.githubusercontent.com/23619646/41173989-2a8fda78-6b2f-11e8-914d-1ef6c010a297.png" height="300px">
-    <img src="    https://user-images.githubusercontent.com/23619646/41174226-e85fa7ea-6b2f-11e8-9e74-bf0a8d9d6397.png" height="300px">
+    <img src="https://user-images.githubusercontent.com/23619646/41174226-e85fa7ea-6b2f-11e8-9e74-bf0a8d9d6397.png" height="300px">
 
 5. When both being green you can use your bot! 🎉🎉🎉
 
