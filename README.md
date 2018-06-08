@@ -45,6 +45,7 @@ This project was created from a request from a salesperson in the company where 
 3. Create your bot BackEnd in IBM Cloud by clicking in "Deploy to IBM Cloud" button.
     
     3.1 Select the following option
+    
     <img src="https://user-images.githubusercontent.com/23619646/41176293-37612bec-6b36-11e8-9296-642d828fc484.png" height="300px">
 
     3.2 Fill up the form with the credentials that you obtained by creating the services you was previously requested
