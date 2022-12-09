@@ -35,7 +35,7 @@
     "cloudant": "^1.10.0-NOTICE",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "mkdirp": "^0.5.1",
     "node-telegram-bot-api": "^0.30.0",
     "request": "^2.85.0",
